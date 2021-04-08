@@ -6,7 +6,7 @@ metadata:
 spec:
   virtualServerAddress: "10.0.2.100"
   iRules:
-    - /Common/Proxy_Protocol_iRule
+    - /Common/Shared/Proxy_Protocol_iRule
   selector:
     matchLabels:
       app: nginx-ingress

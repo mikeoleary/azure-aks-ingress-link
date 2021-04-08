@@ -388,6 +388,13 @@ data "template_file" "vm02_do_json" {
   }
 }
 
+data "template_file" "vm01_as3_json" {
+  template = file("${path.module}/as3.tpl")
+  vars = {
+    irule	    = jsonencode(file("${path.module}/proxyprotocol.irule"))
+  }
+}
+
 # Create F5 BIGIP VMs
 resource "azurerm_virtual_machine" "f5vm01" {
   name                         = "${var.prefix}-f5vm01"
@@ -494,6 +501,11 @@ resource "local_file" "vm02_do_file" {
   filename    = "${path.module}/vm02_do_data.json"
 }
 
+resource "local_file" "vm01_as3_file" {
+  content     = data.template_file.vm01_as3_json.rendered
+  filename    = "${path.module}/vm01_as3_data.json"
+}
+
 resource "null_resource" "f5vm01-run-REST" {
   depends_on = [
     azurerm_network_interface_security_group_association.nsgassociation1,
@@ -526,6 +538,27 @@ resource "null_resource" "f5vm02-run-REST" {
       curl -k -X GET https://${data.azurerm_public_ip.vm02mgmtpip.ip_address}${var.rest_do_uri} -u admin:${var.upassword}
       sleep 10
       curl -k -X ${var.rest_do_method} https://${data.azurerm_public_ip.vm02mgmtpip.ip_address}${var.rest_do_uri} -u admin:${var.upassword} -d @./${path.module}/${var.rest_vm02_do_file}
+    EOF
+  }
+
+}
+
+resource "null_resource" "f5vm01-run-REST-as3" {
+  depends_on = [
+    azurerm_network_interface_security_group_association.nsgassociation1,
+    azurerm_network_interface_security_group_association.nsgassociation2,
+    local_file.vm01_do_file,
+    local_file.vm02_do_file,
+    null_resource.f5vm01-run-REST,
+    null_resource.f5vm02-run-REST
+    ]
+  # Running DO REST API
+  provisioner "local-exec" {
+    command = <<-EOF
+      #!/bin/bash
+      curl -k -X GET https://${data.azurerm_public_ip.vm01mgmtpip.ip_address}${var.rest_as3_uri} -u admin:${var.upassword}
+      sleep 30
+      curl -k -X ${var.rest_as3_method} https://${data.azurerm_public_ip.vm01mgmtpip.ip_address}${var.rest_as3_uri} -u admin:${var.upassword} -d @./${path.module}/${var.rest_vm01_as3_file}
     EOF
   }
 

@@ -8,7 +8,7 @@ These instructions will deploy the hello world app.
 
 ````bash
     #change directory to current
-    cd ../app/helloworld
+    cd ../apps/helloworld
     #update your kube config file
     mv ../../infra/kube_config ~/.kube/config
     #or, set an environment variable

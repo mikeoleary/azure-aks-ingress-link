@@ -23,10 +23,8 @@ This demo uses Terraform to deploy a cluster on Azure Kubernetes Service (AKS), 
 The demo app can be viewed from the internet if you wish, and instructions for deleting this demo are included also.
 
 ## Architecture
-### Cloud Infrastructure provisioned
-![Image of Cloud Architecture](images/azure-aks-crd.png)
-### Focused architecture of traffic flow
-![Image of Application Architecture](images/better_together.png)
+### Cloud Infrastructure provisioned and traffic flow
+![Image of Cloud Architecture](images/azure-aks-ingresslink-with-app.png)
 
 ## Prerequisites
 1. The Terraform version used for this lab is <b>0.14.4</b> 

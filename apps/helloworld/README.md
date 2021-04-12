@@ -10,9 +10,9 @@ These instructions will deploy the hello world app.
     #change directory to current
     cd ../apps/helloworld
     #update your kube config file
-    mv ../../infra/kube_config ~/.kube/config
+    mv ~/azure-aks-ingress-link/infra/kube_config ~/.kube/config
     #or, set an environment variable
-    export KUBECONFIG=../../infra/kube_config
+    export KUBECONFIG=~/azure-aks-ingress-link/infra/kube_config
 ````
 
 2. Run these commands to deploy the resources defined in them

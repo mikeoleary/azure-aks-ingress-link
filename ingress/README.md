@@ -18,9 +18,9 @@ These instructions will configure 2x CIS instances.
 4. Set your kube_config file by copying the file that was created from the infra build, or set an environment variable.
 ````bash
     #update your kube config file
-    mv ../infra/kube_config ~/.kube/config
+    mv ~/azure-aks-ingress-link/infra/kube_config ~/.kube/config
     #or, set an environment variable
-    export KUBECONFIG=../infra/kube_config
+    export KUBECONFIG=~/azure-aks-ingress-link/infra/kube_config
 ````
 5. Then deploy CIS in your cluster with the commands:
 ````bash
